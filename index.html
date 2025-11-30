@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>20-20-20 Eye Care Timer | Protect Your Eyes</title>
+  <meta name="description" content="Professional eye care timer following the 20-20-20 rule. Take a break every 20 minutes to protect your eyes from screen strain.">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+      color: #1e293b;
+    }
+    
+    .container {
+      width: 100%;
+      max-width: 1200px;
+    }
+    
+    header {
+      text-align: center;
+      margin-bottom: 40px;
+      padding-top: 40px;
+    }
+    
+    .logo {
+      font-size: 64px;
+      margin-bottom: 16px;
+      animation: float 3s ease-in-out infinite;
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    h1 {
+      color: white;
+      font-size: 48px;
+      font-weight: 800;
+      margin-bottom: 12px;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    }
+    
+    .tagline {
+      color: rgba(255,255,255,0.9);
+      font-size: 20px;
+      font-weight: 400;
+    }
+    
+    .main-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      margin-bottom: 40px;
+    }
+    
+    @media (max-width: 968px) {
+      .main-content {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    .timer-section {
+      background: white;
+      border-radius: 24px;
+      padding: 40px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .timer-display {
+      font-size: 96px;
+      font-weight: 800;
+      color: #667eea;
+      margin-bottom: 16px;
+      font-variant-numeric: tabular-nums;
+      text-shadow: 0 2px 4px rgba(102, 126, 234, 0.1);
+    }
+    
+    .timer-label {
+      font-size: 18px;
+      color: #64748b;
+      margin-bottom: 32px;
+      text-align: center;
+    }
+    
+    .progress-container {
+      width: 100%;
+      margin-bottom: 32px;
+    }
+    
+    .progress-bar {
+      width: 100%;
+      height: 12px;
+      background: #e2e8f0;
+      border-radius: 10px;
+      overflow: hidden;
+      position: relative;
+    }
+    
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+      border-radius: 10px;
+      transition: width 1s linear;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .progress-fill::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+      animation: shimmer 2s infinite;
+    }
+    
+    @keyframes shimmer {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+    
+    .controls {
+      display: flex;
+      gap: 16px;
+      width: 100%;
+    }
+    
+    .btn {
+      flex: 1;
+      padding: 18px 32px;
+      border: none;
+      border-radius: 12px;
+      font-size: 18px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .btn-primary {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 25px rgba(102, 126, 234, 0.5);
+    }
+    
+    .btn-primary:active {
+      transform: translateY(0);
+    }
+    
+    .btn-secondary {
+      background: #f1f5f9;
+      color: #475569;
+      flex: 0;
+      padding: 18px 24px;
+    }
+    
+    .btn-secondary:hover {
+      background: #e2e8f0;
+    }
+    
+    .info-section {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    
+    .stat-card {
+      background: white;
+      border-radius: 16px;
+      padding: 24px;
+      text-align: center;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      transition: transform 0.3s;
+    }
+    
+    .stat-card:hover {
+      transform: translateY(-4px);
+    }
+    
+    .stat-icon {
+      font-size: 32px;
+      margin-bottom: 12px;
+    }
+    
+    .stat-value {
+      font-size: 36px;
+      font-weight: 800;
+      color: #667eea;
+      margin-bottom: 8px;
+    }
+    
+    .stat-label {
+      font-size: 12px;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 600;
+    }
+    
+    .info-card {
+      background: white;
+      border-radius: 16px;
+      padding: 28px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    
+    .info-card h3 {
+      font-size: 20px;
+      color: #1e293b;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .info-card ul {
+      list-style: none;
+      padding: 0;
+    }
+    
+    .info-card li {
+      padding: 12px 0;
+      color: #475569;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      line-height: 1.6;
+    }
+    
+    .info-card li::before {
+      content: "✓";
+      color: #667eea;
+      font-weight: 700;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+    
+    .settings-btn {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: white;
+      border: none;
+      padding: 14px;
+      border-radius: 12px;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      transition: all 0.3s;
+      z-index: 1000;
+    }
+    
+    .settings-btn:hover {
+      transform: rotate(90deg);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+    }
+    
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.7);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      backdrop-filter: blur(4px);
+    }
+    
+    .modal.active {
+      display: flex;
+    }
+    
+    .modal-content {
+      background: white;
+      border-radius: 20px;
+      padding: 40px;
+      max-width: 500px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      position: relative;
+      animation: slideUp 0.3s ease-out;
+    }
+    
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 32px;
+    }
+    
+    .modal-header h2 {
+      font-size: 28px;
+      color: #1e293b;
+    }
+    
+    .close-btn {
+      background: none;
+      border: none;
+      font-size: 32px;
+      color: #64748b;
+      cursor: pointer;
+      padding: 0;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: color 0.2s;
+    }
+    
+    .close-btn:hover {
+      color: #1e293b;
+    }
+    
+    .setting-group {
+      margin-bottom: 24px;
+    }
+    
+    .setting-group label {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      color: #475569;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .setting-group input[type="number"] {
+      width: 100%;
+      padding: 14px;
+      border: 2px solid #e2e8f0;
+      border-radius: 10px;
+      font-size: 16px;
+      transition: border-color 0.2s;
+    }
+    
+    .setting-group input[type="number"]:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+    
+    .toggle-setting {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 0;
+    }
+    
+    .toggle-switch {
+      width: 56px;
+      height: 28px;
+      background: #cbd5e1;
+      border-radius: 14px;
+      position: relative;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    
+    .toggle-switch.active {
+      background: #667eea;
+    }
+    
+    .toggle-slider {
+      width: 24px;
+      height: 24px;
+      background: white;
+      border-radius: 50%;
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      transition: transform 0.3s;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+    
+    .toggle-switch.active .toggle-slider {
+      transform: translateX(28px);
+    }
+    
+    .break-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(102, 126, 234, 0.98);
+      z-index: 3000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    
+    .break-modal.active {
+      display: flex;
+    }
+    
+    .break-content {
+      text-align: center;
+      color: white;
+      max-width: 600px;
+    }
+    
+    .break-icon {
+      font-size: 120px;
+      margin-bottom: 32px;
+      animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+    
+    .break-title {
+      font-size: 48px;
+      font-weight: 800;
+      margin-bottom: 16px;
+    }
+    
+    .break-subtitle {
+      font-size: 24px;
+      margin-bottom: 40px;
+      opacity: 0.9;
+    }
+    
+    .break-countdown {
+      font-size: 120px;
+      font-weight: 800;
+      margin-bottom: 16px;
+    }
+    
+    .break-instructions {
+      background: rgba(255,255,255,0.1);
+      border-radius: 16px;
+      padding: 24px;
+      margin-top: 40px;
+      text-align: left;
+    }
+    
+    .break-instructions h4 {
+      font-size: 20px;
+      margin-bottom: 16px;
+    }
+    
+    .break-instructions ul {
+      list-style: none;
+      padding: 0;
+    }
+    
+    .break-instructions li {
+      padding: 8px 0;
+      padding-left: 32px;
+      position: relative;
+      font-size: 16px;
+    }
+    
+    .break-instructions li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      font-weight: 700;
+      font-size: 20px;
+    }
+    
+    .skip-break-btn {
+      margin-top: 32px;
+      background: white;
+      color: #667eea;
+      padding: 18px 48px;
+      border: none;
+      border-radius: 12px;
+      font-size: 18px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    
+    .skip-break-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+    }
+    
+    footer {
+      text-align: center;
+      color: rgba(255,255,255,0.8);
+      padding: 40px 20px;
+      font-size: 14px;
+    }
+    
+    footer a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    
+    footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <button class="settings-btn" id="settingsBtn">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <circle cx="12" cy="12" r="3"></circle>
+      <path d="M12 1v6m0 6v6m5.2-13.8l-4.2 4.2m0 3.6l-4.2 4.2m13.8-5.2h-6m-6 0H1m13.8 5.2l-4.2-4.2m0-3.6l-4.2-4.2"></path>
+    </svg>
+  </button>
+
+  <div class="container">
+    <header>
+      <div class="logo">👁️</div>
+      <h1>20-20-20 Eye Care Timer</h1>
+      <p class="tagline">Protect your eyes with smart breaks</p>
+    </header>
+
+    <div class="main-content">
+      <div class="timer-section">
+        <div class="timer-display" id="timerDisplay">20:00</div>
+        <div class="timer-label">until your next eye break</div>
+        
+        <div class="progress-container">
+          <div class="progress-bar">
+            <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+          </div>
+        </div>
+        
+        <div class="controls">
+          <button class="btn btn-primary" id="toggleBtn">
+            <span id="toggleIcon">⏸</span>
+            <span id="toggleText">Pause</span>
+          </button>
+          <button class="btn btn-secondary" id="resetBtn">
+            <span>↻</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="info-section">
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon">⏱️</div>
+            <div class="stat-value" id="sessionsToday">0</div>
+            <div class="stat-label">Today</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">👁️</div>
+            <div class="stat-value" id="totalBreaks">0</div>
+            <div class="stat-label">Total</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">🔥</div>
+            <div class="stat-value" id="streak">0</div>
+            <div class="stat-label">Streak</div>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <h3>🎯 The 20-20-20 Rule</h3>
+          <ul>
+            <li>Every 20 minutes, take a break from your screen</li>
+            <li>Look at something 20 feet (6 meters) away</li>
+            <li>Keep your focus there for 20 seconds</li>
+            <li>This reduces eye strain and fatigue</li>
+          </ul>
+        </div>
+
+        <div class="info-card">
+          <h3>💡 Additional Eye Care Tips</h3>
+          <ul>
+            <li>Position your screen about arm's length away</li>
+            <li>Adjust brightness to match your surroundings</li>
+            <li>Blink frequently to prevent dry eyes</li>
+            <li>Use proper lighting to reduce glare</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>Made with ❤️ for healthier screen time | <a href="#" id="aboutLink">About</a></p>
+  </footer>
+
+  <!-- Settings Modal -->
+  <div class="modal" id="settingsModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>⚙️ Settings</h2>
+        <button class="close-btn" id="closeSettingsBtn">×</button>
+      </div>
+      
+      <div class="setting-group">
+        <label>Work Duration (minutes)</label>
+        <input type="number" id="workDuration" min="1" max="60" value="20">
+      </div>
+      
+      <div class="setting-group">
+        <label>Break Duration (seconds)</label>
+        <input type="number" id="breakDuration" min="10" max="120" value="20">
+      </div>
+      
+      <div class="setting-group">
+        <div class="toggle-setting">
+          <label style="margin: 0;">Sound Alerts</label>
+          <div class="toggle-switch active" id="soundToggle">
+            <div class="toggle-slider"></div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="setting-group">
+        <div class="toggle-setting">
+          <label style="margin: 0;">Browser Notifications</label>
+          <div class="toggle-switch active" id="notificationsToggle">
+            <div class="toggle-slider"></div>
+          </div>
+        </div>
+      </div>
+      
+      <button class="btn btn-primary" id="saveSettingsBtn" style="width: 100%;">
+        Save Settings
+      </button>
+    </div>
+  </div>
+
+  <!-- Break Modal -->
+  <div class="break-modal" id="breakModal">
+    <div class="break-content">
+      <div class="break-icon">👁️</div>
+      <h2 class="break-title">Time for a Break!</h2>
+      <p class="break-subtitle">Look at something 20 feet away</p>
+      <div class="break-countdown" id="breakCountdown">20</div>
+      <p class="timer-label">seconds remaining</p>
+      
+      <div class="break-instructions">
+        <h4>During your break:</h4>
+        <ul>
+          <li>Find an object at least 20 feet (6 meters) away</li>
+          <li>Focus on that object and relax your eyes</li>
+          <li>Blink naturally and take deep breaths</li>
+          <li>Stretch your neck and shoulders gently</li>
+        </ul>
+      </div>
+      
+      <button class="skip-break-btn" id="skipBreakBtn">Skip Break</button>
+    </div>
+  </div>
+
+  <script>
+    let timerState = {
+      isRunning: true,
+      timeLeft: 20 * 60,
+      isBreak: false,
+      breakTimeLeft: 20,
+      settings: {
+        workDuration: 20,
+        breakDuration: 20,
+        sound: true,
+        notifications: true
+      },
+      stats: {
+        sessionsToday: 0,
+        totalBreaks: 0,
+        streak: 0,
+        lastResetDate: new Date().toDateString()
+      }
+    };
+
+    let timerInterval = null;
+
+    // Load saved data from localStorage
+    function loadState() {
+      const saved = localStorage.getItem('eyeCareTimer');
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        
+        // Check if it's a new day and reset daily stats
+        if (parsed.stats.lastResetDate !== new Date().toDateString()) {
+          parsed.stats.sessionsToday = 0;
+          parsed.stats.lastResetDate = new Date().toDateString();
+        }
+        
+        timerState = { ...timerState, ...parsed };
+        updateUI();
+      }
+    }
+
+    function saveState() {
+      localStorage.setItem('eyeCareTimer', JSON.stringify(timerState));
+    }
+
+    function updateUI() {
+      const minutes = Math.floor(timerState.timeLeft / 60);
+      const seconds = timerState.timeLeft % 60;
+      document.getElementById('timerDisplay').textContent = 
+        `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+      
+      const progress = ((timerState.settings.workDuration * 60 - timerState.timeLeft) / 
+                       (timerState.settings.workDuration * 60)) * 100;
+      document.getElementById('progressFill').style.width = `${progress}%`;
+      
+      document.getElementById('sessionsToday').textContent = timerState.stats.sessionsToday;
+      document.getElementById('totalBreaks').textContent = timerState.stats.totalBreaks;
+      document.getElementById('streak').textContent = timerState.stats.streak;
+      
+      document.getElementById('toggleText').textContent = timerState.isRunning ? 'Pause' : 'Start';
+      document.getElementById('toggleIcon').textContent = timerState.isRunning ? '⏸' : '▶';
+      
+      document.title = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')} - Eye Care Timer`;
+    }
+
+    function startTimer() {
+      if (timerInterval) clearInterval(timerInterval);
+      
+      timerInterval = setInterval(() => {
+        if (timerState.isRunning && !timerState.isBreak) {
+          timerState.timeLeft--;
+          
+          if (timerState.timeLeft <= 0) {
+            triggerBreak();
+          }
+          
+          updateUI();
+          saveState();
+        } else if (timerState.isBreak) {
+          timerState.breakTimeLeft--;
+          
+          document.getElementById('breakCountdown').textContent = timerState.breakTimeLeft;
+          
+          if (timerState.breakTimeLeft <= 0) {
+            endBreak();
+          }
+          
+          saveState();
+        }
+      }, 1000);
+    }
+
+    function triggerBreak() {
+      timerState.isBreak = true;
+      timerState.breakTimeLeft = timerState.settings.breakDuration;
+      timerState.stats.sessionsToday++;
+      timerState.stats.totalBreaks++;
+      timerState.stats.streak++;
+      
+      document.getElementById('breakModal').classList.add('active');
+      
+      if (timerState.settings.sound) {
+        playSound();
+      }
+      
+      if (timerState.settings.notifications && 'Notification' in window) {
+        if (Notification.permission === 'granted') {
+          new Notification('👁️ Time for a Break!', {
+            body: 'Look at something 20 feet away for 20 seconds',
+            icon: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="75" font-size="75">👁️</text></svg>'
+          });
+        }
+      }
+      
+      saveState();
+      updateUI();
+    }
+
+    function endBreak() {
+      timerState.isBreak = false;
+      timerState.timeLeft = timerState.settings.workDuration * 60;
+      
+      document.getElementById('breakModal').classList.remove('active');
+      
+      updateUI();
+      saveState();
+    }
+
+    function playSound() {
+      const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      const oscillator = audioContext.createOscillator();
+      const gainNode = audioContext.createGain();
+      
+      oscillator.connect(gainNode);
+      gainNode.connect(audioContext.destination);
+      
+      oscillator.frequency.value = 800;
+      oscillator.type = 'sine';
+      
+      gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+      gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
+      
+      oscillator.start(audioContext.currentTime);
+      oscillator.stop(audioContext.currentTime + 0.5);
+    }
+
+    // Event Listeners
+    document.getElementById('toggleBtn').addEventListener('click', () => {
+      timerState.isRunning = !timerState.isRunning;
+      if (timerState.isRunning) {
+        startTimer();
+      }
+      updateUI();
+      saveState();
+    });
+
+    document.getElementById('resetBtn').addEventListener('click', () => {
+      timerState.timeLeft = timerState.settings.workDuration * 60;
+      timerState.isRunning = true;
+      updateUI();
+      saveState();
+      startTimer();
+    });
+
+    document.getElementById('skipBreakBtn').addEventListener('click', endBreak);
+
+    document.getElementById('settingsBtn').addEventListener('click', () => {
+      document.getElementById('settingsModal').classList.add('active');
+      
+      document.getElementById('workDuration').value = timerState.settings.workDuration;
+      document.getElementById('breakDuration').value = timerState.settings.breakDuration;
+      
+      document.getElementById('soundToggle').classList.toggle('active', timerState.settings.sound);
+      document.getElementById('notificationsToggle').classList.toggle('active', timerState.settings.notifications);
+    });
+
+    document.getElementById('closeSettingsBtn').addEventListener('click', () => {
+      document.getElementById('settingsModal').classList.remove('active');
+    });
+
+    document.getElementById('soundToggle').addEventListener('click', function() {
+      this.classList.toggle('active');
+    });
+
+    document.getElementById('notificationsToggle').addEventListener('click', function() {
+      this.classList.toggle('active');
+      
+      if (this.classList.contains('active') && 'Notification' in window && Notification.permission === 'default') {
+        Notification.requestPermission();
+      }
+    });
+
+    document.getElementById('saveSettingsBtn').addEventListener('click', () => {
+      timerState.settings.workDuration = parseInt(document.getElementById('workDuration').value);
+      timerState.settings.breakDuration = parseInt(document.getElementById('breakDuration').value);
+      timerState.settings.sound = document.getElementById('soundToggle').classList.contains('active');
+      timerState.settings.notifications = document.getElementById('notificationsToggle').classList.contains('active');
+      
+      timerState.timeLeft = timerState.settings.workDuration * 60;
+      
+      saveState();
+      
+      document.getElementById('settingsModal').classList.remove('active');
+      updateUI();
+    });
+
+    // Close modals on outside click
+    document.getElementById('settingsModal').addEventListener('click', (e) => {
+      if (e.target.id === 'settingsModal') {
+        document.getElementById('settingsModal').classList.remove('active');
+      }
+    });
+
+    // Request notification permission on first load
+    if ('Notification' in window && Notification.permission === 'default') {
+      Notification.requestPermission();
+    }
+
+    // Initialize
+    loadState();
+    startTimer();
+    updateUI();
+
+    // Prevent accidental closure
+    window.addEventListener('beforeunload', (e) => {
+      saveState();
+    });
+  </script>
+</body>
+</html>
